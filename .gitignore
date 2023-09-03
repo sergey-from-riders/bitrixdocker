@@ -1,3 +1,4 @@
+.idea
 .env
 /var/tmp/*
 !/var/tmp/.touch
