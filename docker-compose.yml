@@ -1,0 +1,103 @@
+version: '3.7'
+
+services:
+    nginx:
+        build:
+            context: docker/images
+            dockerfile: nginx/Dockerfile
+        depends_on:
+            - php
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.7
+        hostname: '{DEFAULT_DOMAIN}'
+        volumes:
+            - ./www:/var/www
+            - ./data/logs/nginx:/var/log/nginx
+        links:
+            - php
+            - memcached
+    memcached:
+        image: memcached
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.6
+        ports:
+        - '${MEMCACHED_PORT}:11211'
+    php:
+        build:
+            context: docker/images
+            dockerfile: php/php${PHP_VERSION}/Dockerfile
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.5
+        extra_hosts:
+            - bitrix-dev.local:172.20.0.7
+        links:
+            - mysql
+        volumes:
+            - ./www:/var/www
+            - ./var/tmp:/tmp/
+            - ./data/logs/php:/var/log/php
+        environment:
+            - BITRIX_VA_VER='{BITRIX_VM_VER}'
+    mysql:
+        build:
+            context: docker/images
+            dockerfile: mysql/Dockerfile
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.4
+        ports:
+            - "${DB_PORT}:3306"
+        volumes:
+            - ./docker/dumps:/dumps
+            - ./data/db:/var/lib/mysql
+            - ./data/logs/mysql:/var/log/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: '{DB_ROOT_PASSWORD}'
+    supervisor:
+        build:
+            context: docker/images
+            dockerfile: php/supervisor/php${PHP_VERSION}/Dockerfile
+        depends_on:
+            - mysql
+        tty: true
+        volumes:
+            - ./www:/var/www
+            - ./var/tmp:/tmp/
+            - ./data/logs/supervisor:/var/log/supervisor
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.16
+        extra_hosts:
+            - bitrix-dev.local:172.20.0.7
+    pma:
+        image: phpmyadmin/phpmyadmin
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.3
+        restart: always
+        links:
+            - mysql:mysql
+        ports:
+            - '${PHPMYADMIN_PORT}:80'
+        environment:
+            PMA_HOST: mysql
+            MYSQL_USERNAME: root
+            MYSQL_ROOT_PASSWORD: '{DB_ROOT_PASSWORD}'
+    mailer:
+        image: mailhog/mailhog
+        restart: unless-stopped
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.15
+        ports:
+            - "${MAILHOG_PORT}:1025"
+            - "${MAILHOG_WEB_PORT}:8025"
+networks:
+    bitrixdocker:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.20.0.0/24

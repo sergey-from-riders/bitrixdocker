@@ -1,0 +1,7 @@
+.env
+/var/tmp/*
+!/var/tmp/.touch
+/var/cache/*
+!/var/cache/.touch
+/docker/dumps/*
+!/docker/dumps/.touch

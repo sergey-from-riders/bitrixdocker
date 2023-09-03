@@ -1,0 +1,13 @@
+# Set default values for all following accounts.
+defaults
+auth           off
+tls            off
+
+# SMTP settings
+account        itcoda
+host           mailer
+port           1025
+from           test@itcoda.ru
+
+# Set a default account
+account default : itcoda

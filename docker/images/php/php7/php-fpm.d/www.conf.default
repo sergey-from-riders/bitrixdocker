@@ -1,0 +1,33 @@
+[www]
+user = www-data
+group = www-data
+
+listen = 127.0.0.1:9000
+
+listen.backlog = 1024
+
+pm = dynamic
+pm.max_children = 30
+pm.start_servers = 4
+pm.min_spare_servers = 2
+pm.max_spare_servers = 6
+pm.max_requests = 500
+pm.status_path = /status
+ping.path = /ping
+
+pm.process_idle_timeout = 10s
+
+; Таймаут для обслуживания одного запроса, после чего рабочий
+; процесс будет завершен (если не сработает max_execution_time)
+request_terminate_timeout = 600s
+
+slowlog = /var/log/php/php_slow.log
+request_slowlog_timeout = 30
+
+rlimit_core = 0
+catch_workers_output = yes
+
+php_flag[display_errors] = on
+php_admin_value[error_log] = /var/log/php/error.log
+php_admin_flag[log_errors] = on
+php_admin_value[memory_limit] = 1024M
