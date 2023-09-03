@@ -8,3 +8,4 @@ RUN apt-get update ;\
     rm -rf /tmp/*; \
     apt-get --no-install-recommends --no-install-suggests -y install expect
 COPY mysql/my.cnf /etc/my.cnf
+COPY mysql/my.cnf /etc/mysql/my.cnf
