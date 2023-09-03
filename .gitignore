@@ -6,3 +6,5 @@
 !/var/cache/.touch
 /docker/dumps/*
 !/docker/dumps/.touch
+/data/db/*
+!/data/db/.touch

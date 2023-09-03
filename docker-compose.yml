@@ -33,6 +33,7 @@ services:
                 ipv4_address: 172.20.0.5
         extra_hosts:
             - bitrix-dev.local:172.20.0.7
+            - site.local:172.20.0.7
         links:
             - mysql
         volumes:
@@ -72,6 +73,7 @@ services:
                 ipv4_address: 172.20.0.16
         extra_hosts:
             - bitrix-dev.local:172.20.0.7
+            - site.local:172.20.0.7
     pma:
         image: phpmyadmin/phpmyadmin
         networks:
