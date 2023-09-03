@@ -58,8 +58,6 @@ make up
 * COMPOSE_PROJECT_NAME=bitrixdocker (название проекта docker)
 * DB_ROOT_PASSWORD=secret  (пароль для MARIADB для пользователя root)
 * DB_NAME=bitrix (наименование базы данных)
-* DB_USERNAME=root (пользователь базы данных)
-* DB_PASSWORD=secret (пароль пользователя базы данных)
 * APP_PORT=8091 (порт приложения на локальной машине - прокидывается на порт 80 внутри контейнера)
 * PHPMYADMIN_PORT=8184 (порт для phpmyadmin будет доступно по localhost:8184 например) 
 * DB_PORT=33061 (порт mariadb на локальной машине)
