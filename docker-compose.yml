@@ -78,7 +78,7 @@ services:
             - bitrix-dev.local:172.20.0.7
             - site.local:172.20.0.7
     pma:
-        image: phpmyadmin/phpmyadmin
+        image: phpmyadmin:latest
         networks:
             bitrixdocker:
                 ipv4_address: 172.20.0.3
@@ -91,7 +91,7 @@ services:
             PMA_HOST: 'mysql'
             MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
     mailer:
-        image: mailhog/mailhog
+        image: jcalonso/mailhog:latest
         restart: unless-stopped
         networks:
             bitrixdocker:

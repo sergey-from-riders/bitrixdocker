@@ -2,7 +2,7 @@ up: docker-up
 down: docker-down
 restart: docker-down docker-up
 build: docker-build
-
+pull: docker-pull
 docker-up:
 	docker-compose up -d
 
