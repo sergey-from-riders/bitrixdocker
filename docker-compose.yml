@@ -10,7 +10,7 @@ services:
         networks:
             bitrixdocker:
                 ipv4_address: 172.20.0.7
-        hostname: '{DEFAULT_DOMAIN}'
+        hostname: '${DEFAULT_DOMAIN}'
         ports:
             - ${APP_PORT}:80
         volumes:
@@ -43,7 +43,7 @@ services:
             - ./var/tmp:/tmp/
             - ./data/logs/php:/var/log/php
         environment:
-            - BITRIX_VA_VER='{BITRIX_VM_VER}'
+            BITRIX_VA_VER: '${BITRIX_VM_VER}'
     mysql:
         build:
             context: docker/images
