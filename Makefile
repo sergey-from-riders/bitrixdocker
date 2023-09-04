@@ -1,5 +1,5 @@
-up: docker-up
-down: docker-down
+up: create_network docker-up
+down: docker-down delete_network
 restart: docker-down docker-up
 build: docker-build
 pull: docker-pull
@@ -17,3 +17,9 @@ docker-pull:
 
 docker-build:
 	docker-compose build
+
+create_network:
+	docker network inspect "bitrixdocker" > /dev/null 2>&1 || docker network create --subnet 172.20.0.0/24 "bitrixdocker";
+
+delete_network:
+	! docker network inspect "bitrixdocker" > /dev/null 2>&1 || docker network rm "bitrixdocker";

@@ -11,6 +11,8 @@ services:
             bitrixdocker:
                 ipv4_address: 172.20.0.7
         hostname: '{DEFAULT_DOMAIN}'
+        ports:
+            - ${APP_PORT}:80
         volumes:
             - ./www:/var/www
             - ./data/logs/nginx:/var/log/nginx
@@ -101,7 +103,5 @@ services:
             - "${MAILHOG_WEB_PORT}:8025"
 networks:
     bitrixdocker:
-        driver: bridge
-        ipam:
-            config:
-                - subnet: 172.20.0.0/24
+        external: true
+        name: bitrixdocker

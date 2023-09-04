@@ -79,3 +79,12 @@ make up
 * pull (загрузить свежие образы сервисов)
 
 При запуске создается сеть docker с определенной подсетью 172.20.0.0/24
+
+**Как сделать чтобы под MAC сеть автоматом подключалась и прокидывались роуты**
+
+устанавливаем утилиту
+
+```bash
+brew install chipmk/tap/docker-mac-net-connect
+sudo brew services start chipmk/tap/docker-mac-net-connect
+```
