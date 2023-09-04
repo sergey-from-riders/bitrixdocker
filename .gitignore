@@ -8,3 +8,4 @@
 !/docker/dumps/.touch
 /data/db/*
 !/data/db/.touch
+/data/logs/*
