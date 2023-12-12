@@ -2,8 +2,7 @@ FROM phpdockerio/php:8.1-cli
 
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
-    php8.1-memcached \
-    php8.1-memcache \
+    php8.1-redis \
     php8.1-mbstring \
     php8.1-mysql \
     php8.1-intl \
@@ -12,9 +11,11 @@ RUN apt-get update \
     php8.1-gd \
     php8.1-imagick \
     php8.1-opcache \
+    php8.1-xdebug \
     php8.1-zip \
     php-pear php8.1-dev libmcrypt-dev gcc make autoconf libc-dev pkg-config \
     && pecl install mcrypt-1.0.5 \
+    && pecl install redis \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 ADD ./php/php8/php.ini /etc/php/8.1/fpm/conf.d/90-php.ini
@@ -23,14 +24,9 @@ ADD ./php/php8/php.ini /etc/php/8.1/cli/conf.d/90-php.ini
 COPY ./php/common/set_nginx_host.sh /set_nginx_host.sh
 RUN chmod +x /set_nginx_host.sh
 
-# COPY ./php/common/set_msmtp.sh /set_msmtp.sh
-# RUN chmod +x /set_msmtp.sh
-
 RUN apt-get update && apt-get install msmtp -y \
     && apt-get clean; rm -rf /var/lib/apt/lists/*
 
-# COPY ./php/common/msmtprc /etc/msmtprc
-# RUN chmod 600 /etc/msmtprc
 COPY ./php/common/set_nginx_host.sh /set_nginx_host.sh
 RUN chmod +x /set_nginx_host.sh
 COPY ./php/common/msmtp_php /etc/msmtprc

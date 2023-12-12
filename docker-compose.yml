@@ -13,6 +13,7 @@ services:
         hostname: '${DEFAULT_DOMAIN}'
         ports:
             - ${APP_PORT}:80
+            - ${APP_HTTPS_PORT}:443
         volumes:
             - ./www:/var/www
             - ./data/logs/nginx:/var/log/nginx
@@ -44,6 +45,8 @@ services:
             - ./data/logs/php:/var/log/php
         environment:
             BITRIX_VA_VER: '${BITRIX_VM_VER}'
+        ports:
+            - "9000:9000"
     mysql:
         build:
             context: docker/images
@@ -101,6 +104,13 @@ services:
         ports:
             - "${MAILHOG_PORT}:1025"
             - "${MAILHOG_WEB_PORT}:8025"
+    redis:  # Add the redis service definition
+        image: redis
+        networks:
+            bitrixdocker:
+                ipv4_address: 172.20.0.8  # Assign a unique IP address
+        ports:
+            - '${REDIS_PORT}:6379'  # Specify the desired port
 networks:
     bitrixdocker:
         external: true
