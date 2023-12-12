@@ -9,6 +9,6 @@
 /data/db/*
 !/data/db/.touch
 /data/logs/*
-.crt
-.key
+*.crt
+*.key
 .vscode
