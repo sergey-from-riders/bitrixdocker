@@ -20,7 +20,7 @@
 
 1. Клонировать репозиторий
 ```bash
-git clone https://github.com/vbcherepanov/bitrixdocker.git 
+git clone https://github.com/sergey-from-riders/bitrixdocker.git 
 ```
 2. Перейти в каталог bitrixdocker
 ```bash
